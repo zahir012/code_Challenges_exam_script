@@ -1,0 +1,35 @@
+name: Newer version updated 
+
+on:
+  schedule:
+    # Automatically check on every Sunday
+    - cron:  '0 0 * * 0'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # Access token with `workflow` scope is required
+          token: ${{ secrets.WORKFLOW_SECRET }}
+          
+      - name: neweer release version updated
+      
+      - uses: tj-actions/sync-release-version@v13
+        id: sync-release-version
+        # using dummy build image for validation 
+        with:
+          pattern: 'version='
+          current_version_book: 'book_app:v1'
+          new_version_book: 'book_app:v2'
+          current_version_song: 'song_app:v1'
+          new_version_song: 'song_app:v2'
+          current_version_movie: 'movie_app:v1'
+          new_version_movie: 'movie_app:v2'
+          paths: |
+            README.md
+              test/subdir/README.md
+
+      - run: |
+          echo "Upgraded from ${{ steps.sync-release-version.outputs.old_version }} -> ${{ steps.sync-release-version.outputs.new_version }}"    

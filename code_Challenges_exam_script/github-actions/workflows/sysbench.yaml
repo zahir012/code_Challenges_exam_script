@@ -1,0 +1,19 @@
+name: Manual sysbench test with 2 runners
+
+on:
+  # can be used to run workflow manually
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: sysbench install
+        run: |
+          apt update && apt -y install sysbench 
+      - name: sysbench run for cpu
+        run: |
+          sysbench cpu --cpu-max-prime=20000 --threads=4 --time=60 run
+        
+      

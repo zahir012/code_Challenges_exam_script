@@ -1,0 +1,10 @@
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: {{ include "quote.fullname" . }}
+  labels:
+    {{- include "quote.labels" . | nindent 4 }}
+spec:
+  hostname: "*"
+  prefix: /{{ .Chart.Name }}
+  service: {{ include "quote.fullname" . }}

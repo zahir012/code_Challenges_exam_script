@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: top10-songs-deployment
+  labels:
+    app: top10-songs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: top10-songs
+  template:
+    metadata:
+      labels:
+        app: top10-songs
+    spec:
+      containers:
+      - name: top10-songs
+        image: $registry/song_app:v1 # github actions create image
+        ports:
+        - containerPort: 8080 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: top10-songs-svc
+spec:
+  type: NodePort
+  selector:
+    app: top10-songs
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 300010
+ 

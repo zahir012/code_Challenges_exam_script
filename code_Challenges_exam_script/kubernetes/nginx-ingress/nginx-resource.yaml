@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-resource
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx-resource
+  rules:
+  - http:
+      paths:
+      - path: /top10songs
+        pathType: Prefix
+        backend:
+          service:
+            name: top10-songs-svc
+            port:
+              number: 300010
+
+      - path: /top10movies
+        pathType: Prefix
+        backend:
+          service:
+            name: top10-movies-svc
+            port:
+              number: 30009
+
+      - path: /top10books
+        pathType: Prefix
+        backend:
+          service:
+            name: top10-books-svc
+            port:
+              number: 30008               
+              

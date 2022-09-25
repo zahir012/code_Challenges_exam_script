@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: top10-movies-deployment
+  labels:
+    app: top10-movies
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: top10-movies
+  template:
+    metadata:
+      labels:
+        app: top10-movies
+    spec:
+      containers:
+      - name: top10-movies
+        image: $registry/movie_app:v1 # github actions create image
+        ports:
+        - containerPort: 8080 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: top10-movies-svc
+spec:
+  type: NodePort
+  selector:
+    app: top10-movies
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30009
+ 

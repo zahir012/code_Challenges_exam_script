@@ -1,0 +1,5 @@
+01. using url 
+https://osrm.meena.fndev.net/route/v1/driving/-73.935242,40.730610;-73.971321,40.776676?overview=false
+
+2. please run command
+k6 run script.js
